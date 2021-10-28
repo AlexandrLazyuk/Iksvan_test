@@ -1,0 +1,21 @@
+1.SELECT
+  bid.client_number,
+  SUM(case when event_value.outcome = 'lose' then 1 end) as Поражений,
+  SUM(case when event_value.outcome = 'win' then 1 end) as Побед
+
+FROM bid INNER JOIN event_value ON bid.play_id = event_value.play_id
+  GROUP BY bid.client_number
+
+ORDER BY
+  bid.client_number ASC;
+
+
+ 2. SELECT
+  CONCAT(home_team, '-', away_team) as game,
+  COUNT(*) AS game_count
+FROM
+  event_entity
+GROUP BY
+  home_team,
+  away_team
+HAVING game_count >= 1;

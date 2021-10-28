@@ -1,5 +1,8 @@
 import cv2
 import numpy as np
+import json
+
+from cv2 import data
 
 
 def main(file: str):
@@ -28,3 +31,6 @@ def main(file: str):
 
 if name == 'main':
     main('images/1.jpg')
+
+with open('data.json', 'w', encoding='utf-8') as f:
+    json.dump(data, f, ensure_ascii=False, indent=4)

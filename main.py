@@ -11,7 +11,6 @@ def main(file: str):
     woards = []
     kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (3, 3))
     grad = cv2.morphologyEx(small, cv2.MORPH_GRADIENT, kernel)
-
     _, bw = cv2.threshold(grad, 0.0, 255.0, cv2.THRESH_BINARY | cv2.THRESH_OTSU)
     kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (9, 1))
     connected = cv2.morphologyEx(bw, cv2.MORPH_CLOSE, kernel)

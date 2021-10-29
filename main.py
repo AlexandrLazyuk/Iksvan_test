@@ -2,8 +2,6 @@ import cv2
 import numpy as np
 import json
 
-from cv2 import data
-
 
 def main(file: str):
     large = cv2.imread(file)
@@ -29,8 +27,8 @@ def main(file: str):
             cv2.imwrite(f'contoured{idx}.jpg', copy_image)
 
 
-if name == 'main':
+if __name__ == '__main__':
     main('images/1.jpg')
 
-with open('data.json', 'w', encoding='utf-8') as f:
-    json.dump(data, f, ensure_ascii=False, indent=4)
+# with open('data.json', 'w', encoding='utf-8') as f:
+#     json.dump(data, f, ensure_ascii=False, indent=4)

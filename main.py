@@ -39,4 +39,7 @@ def dict_write_to_json(data):
 
 if __name__ == '__main__':
     main('images/1.jpg')
+    main('images/2.jpg')
+    main('images/3.jpg')
+    main('images/4.jpg')
 

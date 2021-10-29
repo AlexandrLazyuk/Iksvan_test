@@ -1,13 +1,14 @@
 import cv2
 import numpy as np
 import json
+import pytesseract
 
 
 def main(file: str):
     large = cv2.imread(file)
     rgb = cv2.pyrDown(large)
     small = cv2.cvtColor(rgb, cv2.COLOR_BGR2GRAY)
-
+    woards = []
     kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (3, 3))
     grad = cv2.morphologyEx(small, cv2.MORPH_GRADIENT, kernel)
 
@@ -24,11 +25,19 @@ def main(file: str):
         r = float(cv2.countNonZero(mask[y:y + h, x:x + w])) / (w * h)
         if r > 0.45 and w > 8 and h > 8:
             copy_image = rgb[y:y + h, x:x + w]
-            cv2.imwrite(f'contoured{idx}.jpg', copy_image)
+            text = pytesseract.image_to_string(copy_image, lang="rus")
+            clear_text = text.strip()
+            if clear_text:
+                woards.append(clear_text)
+    b = dict(zip(i := iter(woards), i))
+    dict_write_to_json(b)
+
+
+def dict_write_to_json(data):
+    with open('data.json', 'w', encoding='utf-8') as f:
+        json.dump(data, f, ensure_ascii=False, indent=4)
 
 
 if __name__ == '__main__':
     main('images/1.jpg')
 
-# with open('data.json', 'w', encoding='utf-8') as f:
-#     json.dump(data, f, ensure_ascii=False, indent=4)
